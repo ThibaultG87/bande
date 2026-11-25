@@ -173,7 +173,7 @@ export const CLEAN = (() => {
     let h = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${VBW} ${VBH}" width="${VBW}" height="${VBH}" font-family="${font}">`;
     h += `<rect width="${VBW}" height="${VBH}" fill="#fff"/>` + (ROND ? `<circle cx="${ROND.cx}" cy="${ROND.cy}" r="${ROND.R}" fill="#f6f8fa" stroke="#2b3440" stroke-width="3"/>` : `<rect x="${XL}" y="${YT}" width="${XR - XL}" height="${YB - YT}" rx="10" fill="#f6f8fa" stroke="#2b3440" stroke-width="3"/>`);
     for (const [sd, x, y, rot] of [["A", MIDX, 26, 0], ["B", VBW - 18, MIDY, 90], ["C", MIDX, VBH - 18, 0], ["D", 18, MIDY, -90]]) {
-      const f = letterOf(box, sd), t = `${f}${sides[f] ? " · " + cut(sides[f], 24) : ""}`;   // boîte retournée : les lettres suivent les gaines
+      const f = letterOf(box, sd), t = `${f}`;   // 25/11/2026 (Thibault) : seulement la lettre de la face (A, B, C, D), sans le nom de la pièce, à l'écran comme dans les PDF ;   // boîte retournée : les lettres suivent les gaines
       h += `<g${rot ? ` transform="rotate(${rot} ${x} ${y})"` : ""}><text x="${x}" y="${y + 9}" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2a36">${esc(t)}</text></g>`;
     }
     // fils extérieurs + bornes

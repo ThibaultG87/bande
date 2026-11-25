@@ -105,7 +105,7 @@ export function schemaSVG(box, steps, { color = () => "#888", sides = {}, font =
   h += `<rect x="${X0}" y="${X0}" width="${S}" height="${S}" rx="10" fill="#f6f8fa" stroke="#2b3440" stroke-width="3"/>`;
   // faces et pièces, à l'extérieur, aux quatre bords (sens de pose de la boîte)
   for (const [f, x, y, rot] of [["A", 500, 26, 0], ["B", 982, 500, 90], ["C", 500, 982, 0], ["D", 18, 500, -90]]) {
-    const t = `${f}${sides[f] ? " · " + cut(sides[f], 24) : ""}`;
+    const t = `${f}`;   // 25/11/2026 (Thibault) : seulement la lettre de la face (A, B, C, D), sans le nom de la pièce, à l'écran comme dans les PDF
     h += `<g class="face" data-f="${f}"${rot ? ` transform="rotate(${rot} ${x} ${y})"` : ""}><text x="${x}" y="${y + 9}" text-anchor="middle" font-size="${26 * F}" font-weight="700" fill="#1f2a36">${esc(t)}</text></g>`;
   }
   const term = new Map();          // borne de chaque fil : { x, y, f, nx, ny } (nx, ny = direction vers l'intérieur)
@@ -287,7 +287,7 @@ export function tranchesSVG(box, { sides = {}, n = 6, font = "Arial, sans-serif"
   (flip ? ["C", "B", "A", "D"] : ["A", "B", "C", "D"]).forEach((f, k) => {
     const y0 = 8 + k * SH, rx = 40, rw = W - 80, ry = y0 + 40, rh = 74;
     const list = trancheOrder(box, f, N), used = list.filter((x) => x.g).length;
-    h += `<g class="tranche" data-f="${f}"><text x="${rx}" y="${y0 + 24}" font-size="22" font-weight="700" fill="#1f2a36">Tranche ${f}${sides[f] ? " · " + esc(cut(sides[f], 30)) : ""}</text>`;
+    h += `<g class="tranche" data-f="${f}"><text x="${rx}" y="${y0 + 24}" font-size="22" font-weight="700" fill="#1f2a36">Tranche ${f}</text>`;   // 25/11/2026 (Thibault) : seulement la lettre de la face (A, B, C, D), sans le nom de la pièce, à l'écran comme dans les PDF
     h += `<text x="${rx + rw}" y="${y0 + 24}" text-anchor="end" font-size="15" fill="#555">vue de l'extérieur (${where[f]}) · ${used} trou${used > 1 ? "s" : ""} · gauche → droite</text>`;
     h += `<rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" rx="8" fill="#f6f8fa" stroke="#2b3440" stroke-width="2.5"/>`;
     const step = rw / N;
